@@ -73,26 +73,26 @@ class StudyPlannerApp:
             self.root,
             text="Add Task",
             width=25
-        ).pack()
+        ).pack(pady=8)
 
         tk.Button(
             self.root,
             text="Edit/Delete Task",
             width=25
-        ).pack()
+        ).pack(pady=8)
 
         tk.Button(
             self.root,
             text="View All Tasks",
             width=25
-        ).pack()
+        ).pack(pady=8)
 
         tk.Button(
             self.root,
             text="Back",
             width=25,
             command=self.show_start_screen
-        ).pack()
+        ).pack(pady=8)
 
 
 root = tk.Tk()
