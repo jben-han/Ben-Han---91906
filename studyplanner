@@ -1,5 +1,4 @@
 import tkinter as tk
-import json
 
 
 class Task:
@@ -28,6 +27,8 @@ class StudyPlannerApp:
         for widget in self.root.winfo_children():
             widget.destroy()
 
+    # ---------- Start Screen ----------
+
     def show_start_screen(self):
         self.clear_window()
 
@@ -37,17 +38,27 @@ class StudyPlannerApp:
             font=("Arial", 24, "bold")
         ).pack(pady=20)
 
+        tk.Label(
+            self.root,
+            text="Organise assignments, study sessions and deadlines.",
+            font=("Arial", 12)
+        ).pack(pady=10)
+
         tk.Button(
             self.root,
             text="Main Dashboard",
+            width=20,
             command=self.show_dashboard
         ).pack(pady=10)
 
         tk.Button(
             self.root,
             text="Exit",
+            width=20,
             command=self.root.quit
-        ).pack(pady=10)
+        ).pack()
+
+    # ---------- Dashboard ----------
 
     def show_dashboard(self):
         self.clear_window()
@@ -55,8 +66,33 @@ class StudyPlannerApp:
         tk.Label(
             self.root,
             text="Main Dashboard",
-            font=("Arial", 20)
+            font=("Arial", 20, "bold")
         ).pack(pady=20)
+
+        tk.Button(
+            self.root,
+            text="Add Task",
+            width=25
+        ).pack()
+
+        tk.Button(
+            self.root,
+            text="Edit/Delete Task",
+            width=25
+        ).pack()
+
+        tk.Button(
+            self.root,
+            text="View All Tasks",
+            width=25
+        ).pack()
+
+        tk.Button(
+            self.root,
+            text="Back",
+            width=25,
+            command=self.show_start_screen
+        ).pack()
 
 
 root = tk.Tk()
