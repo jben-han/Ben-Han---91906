@@ -133,7 +133,6 @@ class StudyPlannerApp:
 
         def save_task():
             title = task_entry.get().strip()
-
             due = due_entry.get().strip()
             priority = priority_box.get()
 
@@ -152,8 +151,7 @@ class StudyPlannerApp:
                 "Task added successfully."
             )
 
-            task_entry.delete(0, tk.END)
-            due_entry.delete(0, tk.END)
+            self.show_dashboard()
 
         tk.Button(
             self.root,
@@ -188,14 +186,12 @@ class StudyPlannerApp:
         if len(self.task_manager.tasks) == 0:
             task_list.insert(tk.END, "No tasks have been added yet.")
         else:
-
-            latest_task = self.task_manager.tasks[-1]
-
-            task_list.insert(
-                tk.END,
-                f"{latest_task.title} | Due: {latest_task.due_date} | "
-                f"Priority: {latest_task.priority}"
-            )
+            for task in self.task_manager.tasks:
+                task_list.insert(
+                    tk.END,
+                    f"{task.title} | Due: {task.due_date} | "
+                    f"Priority: {task.priority}"
+                )
 
         tk.Button(
             self.root,
