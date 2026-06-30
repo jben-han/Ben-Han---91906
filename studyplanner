@@ -98,7 +98,7 @@ class StudyPlannerApp:
             text="Back",
             width=25,
             command=self.show_start_screen
-        ).pack(pady=20)
+        ).pack(pady=8)
 
     # ---------- Add Task ----------
 
