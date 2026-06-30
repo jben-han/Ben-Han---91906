@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk, messagebox
 
 
 class Task:
@@ -11,6 +12,9 @@ class Task:
 class TaskManager:
     def __init__(self):
         self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
 
 
 class StudyPlannerApp:
@@ -72,7 +76,8 @@ class StudyPlannerApp:
         tk.Button(
             self.root,
             text="Add Task",
-            width=25
+            width=25,
+            command=self.show_add_task
         ).pack(pady=8)
 
         tk.Button(
@@ -84,7 +89,8 @@ class StudyPlannerApp:
         tk.Button(
             self.root,
             text="View All Tasks",
-            width=25
+            width=25,
+            command=self.show_view_tasks
         ).pack(pady=8)
 
         tk.Button(
@@ -92,7 +98,110 @@ class StudyPlannerApp:
             text="Back",
             width=25,
             command=self.show_start_screen
-        ).pack(pady=8)
+        ).pack(pady=20)
+
+    # ---------- Add Task ----------
+
+    def show_add_task(self):
+        self.clear_window()
+
+        tk.Label(
+            self.root,
+            text="Add Task",
+            font=("Arial", 18, "bold")
+        ).pack(pady=10)
+
+        tk.Label(self.root, text="Task Name").pack()
+
+        task_entry = tk.Entry(self.root, width=40)
+        task_entry.pack()
+
+        tk.Label(self.root, text="Due Date").pack()
+
+        due_entry = tk.Entry(self.root, width=40)
+        due_entry.pack()
+
+        tk.Label(self.root, text="Priority").pack()
+
+        priority_box = ttk.Combobox(
+            self.root,
+            values=["High", "Medium", "Low"],
+            state="readonly"
+        )
+        priority_box.pack()
+        priority_box.current(1)
+
+        def save_task():
+            title = task_entry.get()
+
+            due = due_entry.get().strip()
+            priority = priority_box.get()
+
+            if title == "":
+                messagebox.showerror(
+                    "Error",
+                    "Task name cannot be empty."
+                )
+                return
+
+            task = Task(title, due, priority)
+            self.task_manager.add_task(task)
+
+            messagebox.showinfo(
+                "Success",
+                "Task added successfully."
+            )
+
+            task_entry.delete(0, tk.END)
+            due_entry.delete(0, tk.END)
+
+        tk.Button(
+            self.root,
+            text="Save Task",
+            command=save_task
+        ).pack(pady=10)
+
+        tk.Button(
+            self.root,
+            text="Back",
+            command=self.show_dashboard
+        ).pack()
+
+    # ---------- View Tasks ----------
+
+    def show_view_tasks(self):
+        self.clear_window()
+
+        tk.Label(
+            self.root,
+            text="All Tasks",
+            font=("Arial", 18, "bold")
+        ).pack(pady=10)
+
+        task_list = tk.Listbox(
+            self.root,
+            width=80,
+            height=15
+        )
+        task_list.pack(pady=10)
+
+        if len(self.task_manager.tasks) == 0:
+            task_list.insert(tk.END, "No tasks have been added yet.")
+        else:
+            
+            latest_task = self.task_manager.tasks[-1]
+
+            task_list.insert(
+                tk.END,
+                f"{latest_task.title} | Due: {latest_task.due_date} | "
+                f"Priority: {latest_task.priority}"
+            )
+
+        tk.Button(
+            self.root,
+            text="Back",
+            command=self.show_dashboard
+        ).pack()
 
 
 root = tk.Tk()
