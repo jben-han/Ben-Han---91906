@@ -116,7 +116,7 @@ class StudyPlannerApp:
         task_entry = tk.Entry(self.root, width=40)
         task_entry.pack()
 
-        tk.Label(self.root, text="Due Date").pack()
+        tk.Label(self.root, text="Due Date (Optional)").pack()
 
         due_entry = tk.Entry(self.root, width=40)
         due_entry.pack()
@@ -132,7 +132,7 @@ class StudyPlannerApp:
         priority_box.current(1)
 
         def save_task():
-            title = task_entry.get()
+            title = task_entry.get().strip()
 
             due = due_entry.get().strip()
             priority = priority_box.get()
@@ -188,7 +188,7 @@ class StudyPlannerApp:
         if len(self.task_manager.tasks) == 0:
             task_list.insert(tk.END, "No tasks have been added yet.")
         else:
-            
+
             latest_task = self.task_manager.tasks[-1]
 
             task_list.insert(
